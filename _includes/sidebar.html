@@ -33,13 +33,15 @@
       {% if site.filter == 'category' %}
         {% for post in site.posts %}
           <a class="toc-link" data-tags="{{ post.categories | join: ' ' }}" href="{{ post.url }}">
-            {{ post.title }}{{ post.date | date: "%b %Y" }}
+            <span>{{ post.title }}</span>
+			<span>{{ post.date | date: "%b %Y" }}</span>
           </a>
         {% endfor %}
       {% elsif site.filter == 'tag' %}
         {% for post in site.posts %}
           <a class="toc-link" data-tags="{{ post.tags | join: ' ' }}" href="{{ post.url }}">
-            {{ post.title }}{{ post.date | date: "%b %Y" }}
+            <span>{{ post.title }}</span>
+			<span>{{ post.date | date: "%b %Y" }}</span>
           </a>
         {% endfor %}
       {% endif %}
