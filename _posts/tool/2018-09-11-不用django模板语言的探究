@@ -1,0 +1,8 @@
+研究了一下抛弃django template的前后端分离模式，但还是绕不过一个模板。
+保持所有html风格一致，除了编写每一个页面外，还可以定义一些公共页面如header，footer等。（其实也是一种模板系统）
+如果不采用django的原生模板语言的话，那就可以使用html include方法。编写common.html，然后在index.html中通过`<!--#include file=＂＂>`的方法可以将common.html引入此页面，实际上，是在客户端的浏览器上拼接成完整的html。
+这种方案很不错，但是在调试阶段的话需要安装nginx，并通过uwsgi与python相连接。
+对于nginx的话，可以在windows下安装成功。（虽然有人评论说有很多bug）
+对于uwsgi，虽然有很多的教程如何如何修改，但是最后的结论居然是不能安装在windows上。
+所以，<strong> 如果想要搭建抛弃django模板语言的前后端分离的系统，需要搭建Linux服务器（虽然最后也是要部署在上边的）。并安装nginx+uwsgi，实现最终的开发测试。</strong>
+不知道还有没有其他的思路。。。
