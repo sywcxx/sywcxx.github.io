@@ -33,8 +33,9 @@
       {% if site.filter == 'category' %}
         {% for post in site.posts %}
           <a class="toc-link" data-tags="{{ post.categories | join: ' ' }}" href="{{ post.url }}">
-            <span>{{ post.title }}</span>
-			<span style="float:right;">{{ post.date | date: "%Y %d %b" }}</span>
+            <!-- <span>{{ post.title }}</span> -->
+			<!-- <span style="float:right;">{{ post.date | date: "%Y %d %b" }}</span> -->
+			{{post.title}}
           </a>
         {% endfor %}
       {% elsif site.filter == 'tag' %}
