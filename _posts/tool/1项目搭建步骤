@@ -1,0 +1,114 @@
+---
+ layout: post
+ category: 工具
+ ---
+1、创建项目
+django-admin.py startproject mysite
+
+会创建项目的文件夹
+
+2、创建应用
+cd /mysite
+python manage.py startapp HelloWorld
+
+3、测试
+python manage.py runserver 0.0.0.0:8000
+
+4、编写应用HelloWorld的View函数
+
+from django.shortcuts import render
+from django.http import HttpResponse
+
+import json
+from models import Tips
+
+def getTips(request):
+	aTip = Tips.objects.get(id=1)
+	res = {"data":aTip.conte}
+	return HttpResponse(json.dumps(res),content_type="application/json")
+
+def myFunc(request):
+    return render(request,'starter.html')
+    
+5、编写models
+from __future__ import unicode_literals
+
+from django.db import models
+
+class Tips(models.Model):
+	conte = models.CharField(max_length=500, blank=True, null=True)
+	user_name = models.CharField(max_length=50, blank=True, null=True)
+
+编写好之后，运行命令
+python manage.py makemigrations
+python manage.py migrate
+
+可以生成相应的表。
+
+6、编辑urls.py
+可以在总的urls通过include来配置：
+在项目层：
+from django.conf.urls import url,include
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^hello/', include('HelloWorld.urls',namespace='helloworld')),
+]
+在应用层：
+from django.conf.urls import url
+from django.contrib import admin
+
+from HelloWorld import views as Hview
+
+urlpatterns = [
+    url(r'^$', Hview.myFunc),
+    url(r'gettips$', Hview.getTips),
+]
+
+7、在setting中添加app
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    'HelloWorld',
+]
+
+8、设置static
+static是常用的一些静态文件。针对runserver的话：
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,"static/")
+STATICFILES_DIRS = [os.path.join(BASE_DIR,"sta/")]
+
+可将常用的css/js/img放到项目根目录的sta下，然后设置static_url和static_root，通过
+python manage.py collectstatic
+可将所有的静态文件收集至/static下，这样就可以在html中引用/static/这个目录了（如adminlte就可以通过这样方式放到/static目录下）
+
+9、编写html
+在应用文件夹内新建templates
+然后新建.html
+自行编写的html或者采用adminlte框架的页面都可以放在这个地方。
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>HelloWorld</title>
+<style type="text/css">
+h1{
+    font-size:20px;
+    color:#930;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+<h1>this is html</h1>
+<p>Hello World</p>
+</body>
+</html>
